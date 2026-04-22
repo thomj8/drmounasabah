@@ -454,24 +454,45 @@ async function saveAll(){
 function prevImg(input,prevId,key){
   var file=input.files[0];
   if(!file)return;
-  var rd=new FileReader();
-  rd.onload=function(ev){
-    var p=document.getElementById(prevId);
-    p.src=ev.target.result;p.style.display='block';
-    pImgs[key]=ev.target.result;
-  };
-  rd.readAsDataURL(file);
+  var p=document.getElementById(prevId);
+  p.src=URL.createObjectURL(file);
+  p.style.display='block';
+  pImgs[key]=file;
+}
+
+async function uploadFile(file,name){
+  try{
+    // Delete old file first
+    await fetch(SB+'/storage/v1/object/images/'+name,{method:'DELETE',headers:H});
+    // Upload new file
+    var fh=Object.assign({},H,{'Content-Type':file.type});
+    delete fh['Content-Type'];
+    var r=await fetch(SB+'/storage/v1/object/images/'+name,{
+      method:'POST',
+      headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':file.type,'x-upsert':'true'},
+      body:file
+    });
+    if(r.ok){
+      return SB+'/storage/v1/object/public/images/'+name;
+    }
+    return null;
+  }catch(e){console.log('Upload error:',e);return null;}
 }
 
 async function saveImgs(){
+  var map={hero_image:'hero.jpg',doctor_image:'doctor.jpg',favicon_image:'favicon.png'};
   for(var k in pImgs){
-    await fetch(SB+'/rest/v1/site_settings?key=eq.'+k,{
-      method:'PATCH',
-      headers:Object.assign({},H,{'Prefer':'return=minimal'}),
-      body:JSON.stringify({value:pImgs[k]})
-    });
+    var url=await uploadFile(pImgs[k],map[k]||k);
+    if(url){
+      await fetch(SB+'/rest/v1/site_settings?key=eq.'+k,{
+        method:'PATCH',
+        headers:Object.assign({},H,{'Prefer':'return=minimal'}),
+        body:JSON.stringify({value:url+'?t='+Date.now()})
+      });
+    }
   }
   showOk('ok6');
+  alert('✅ Images sauvegardées! Rechargez le site pour voir les changements.');
 }
 
 function today(){
