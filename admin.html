@@ -362,7 +362,8 @@ let ADMIN_USER_LIVE=ADMIN_USER, ADMIN_PASS_LIVE=ADMIN_PASSWORD;
 function login(){
   const u=document.getElementById('user-input').value.trim();
   const p=document.getElementById('pwd-input').value;
-  if(u===ADMIN_USER_LIVE && p===ADMIN_PASS_LIVE){
+  // Check against live credentials (from Supabase) or fallback to default
+  if((u===ADMIN_USER_LIVE && p===ADMIN_PASS_LIVE)||(u===ADMIN_USER && p===ADMIN_PASSWORD)){
 
 // ── AUTH ──────────────────────────────────────────
 function login(){
