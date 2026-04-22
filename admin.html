@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — Dr. Mouna Sabah</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--brown:#4a2c1a;--brown-mid:#7a4a2e;--brown-light:#c49a6c;--gold:#d4a853;--cream:#fdf6ee;--white:#fff;--gray:#f5f0ea;--red:#e74c3c;--green:#27ae60}
+body{font-family:'Poppins',sans-serif;background:var(--gray);color:var(--brown);min-height:100vh}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--brown),var(--brown-mid))}
+.login-box{background:var(--white);border-radius:24px;padding:50px 40px;width:100%;max-width:400px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);margin-bottom:8px}
+.login-logo span{color:var(--gold)}
+.login-sub{color:var(--brown-light);font-size:.85rem;margin-bottom:35px}
+.login-box input{width:100%;padding:14px 18px;border:1.5px solid rgba(196,154,108,.3);border-radius:12px;background:var(--cream);color:var(--brown);font-family:'Poppins',sans-serif;font-size:.95rem;outline:none;transition:.3s;text-align:center;letter-spacing:3px;margin-bottom:15px}
+.login-box input:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--brown),var(--brown-mid));color:var(--white);border:none;padding:15px;border-radius:40px;font-size:1rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:.3s}
+.login-btn:hover{background:linear-gradient(135deg,var(--gold),var(--brown-light));color:var(--brown)}
+.login-error{color:var(--red);font-size:.85rem;margin-top:10px;display:none}
+
+/* LAYOUT */
+#admin-screen{display:none;min-height:100vh}
+.topbar{background:var(--white);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 15px rgba(74,44,26,.08);position:sticky;top:0;z-index:200}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--brown)}
+.topbar-logo span{color:var(--gold)}
+.logout-btn{background:none;border:1.5px solid rgba(196,154,108,.4);color:var(--brown-mid);padding:7px 16px;border-radius:20px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.82rem;transition:.3s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+.save-all-btn{background:linear-gradient(135deg,var(--green),#2ecc71);color:var(--white);border:none;padding:9px 20px;border-radius:20px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:600;transition:.3s;display:flex;align-items:center;gap:7px}
+.save-all-btn:hover{opacity:.9;transform:translateY(-1px)}
+
+.layout{display:flex;min-height:calc(100vh - 53px)}
+
+/* SIDEBAR */
+.sidebar{width:220px;min-width:220px;background:var(--white);border-right:1px solid rgba(196,154,108,.15);padding:20px 0}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:12px 22px;cursor:pointer;transition:.2s;font-size:.88rem;font-weight:500;color:var(--brown-mid);border-left:3px solid transparent}
+.sidebar-item:hover{background:var(--cream);color:var(--brown)}
+.sidebar-item.active{background:rgba(212,168,83,.08);color:var(--brown);border-left-color:var(--gold);font-weight:600}
+.sidebar-item i{width:18px;text-align:center;color:var(--gold)}
+.sidebar-sep{height:1px;background:rgba(196,154,108,.15);margin:10px 0}
+
+/* CONTENT */
+.content{flex:1;padding:30px;overflow-y:auto}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);margin-bottom:25px;display:flex;align-items:center;gap:10px}
+
+/* CARDS */
+.card{background:var(--white);border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 4px 20px rgba(74,44,26,.06)}
+.card-title{font-size:.95rem;font-weight:700;color:var(--brown);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(196,154,108,.15);display:flex;align-items:center;gap:8px}
+.card-title i{color:var(--gold)}
+
+/* FORM */
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group textarea{width:100%;padding:11px 16px;border:1.5px solid rgba(196,154,108,.25);border-radius:10px;background:var(--cream);color:var(--brown);font-family:'Poppins',sans-serif;font-size:.9rem;outline:none;transition:.3s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(212,168,83,.08)}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.color-row{display:flex;align-items:center;gap:12px}
+.color-row input[type=color]{width:50px;height:40px;border:1.5px solid rgba(196,154,108,.25);border-radius:8px;cursor:pointer;padding:2px;background:var(--cream)}
+.color-row input[type=text]{flex:1}
+
+/* SAVE BTN */
+.save-btn{background:linear-gradient(135deg,var(--brown),var(--brown-mid));color:var(--white);border:none;padding:12px 28px;border-radius:30px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:.3s;display:inline-flex;align-items:center;gap:8px;margin-top:5px}
+.save-btn:hover{background:linear-gradient(135deg,var(--gold),var(--brown-light));color:var(--brown)}
+.saved-msg{display:inline-block;color:var(--green);font-size:.85rem;margin-left:12px;opacity:0;transition:.3s}
+
+/* IMAGE UPLOAD */
+.img-upload{border:2px dashed rgba(196,154,108,.4);border-radius:14px;padding:25px;text-align:center;cursor:pointer;transition:.3s;background:var(--cream)}
+.img-upload:hover{border-color:var(--gold);background:rgba(212,168,83,.05)}
+.img-upload i{font-size:2rem;color:var(--brown-light);margin-bottom:10px;display:block}
+.img-upload p{color:var(--brown-light);font-size:.85rem}
+.img-preview{max-width:100%;max-height:180px;border-radius:10px;margin-top:12px;display:none}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:25px}
+.stat-card{background:var(--white);border-radius:14px;padding:20px;text-align:center;box-shadow:0 4px 15px rgba(74,44,26,.06)}
+.s-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--brown)}
+.s-label{color:var(--brown-light);font-size:.78rem;margin-top:4px}
+
+/* RESERVATIONS TABLE */
+.res-table{width:100%;border-collapse:collapse}
+.res-table th{padding:12px 16px;text-align:left;font-size:.75rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;letter-spacing:.8px;background:var(--cream)}
+.res-table td{padding:14px 16px;font-size:.86rem;border-bottom:1px solid rgba(196,154,108,.1);color:var(--brown)}
+.res-table tr:hover td{background:rgba(253,246,238,.6)}
+.badge{display:inline-block;padding:3px 10px;border-radius:15px;font-size:.73rem;font-weight:600}
+.badge-today{background:rgba(212,168,83,.15);color:#b8860b}
+.badge-upcoming{background:rgba(39,174,96,.1);color:var(--green)}
+.badge-past{background:rgba(196,154,108,.15);color:var(--brown-light)}
+.del-btn{background:none;border:none;color:#ddd;cursor:pointer;font-size:.9rem;transition:.2s;padding:5px 8px;border-radius:7px}
+.del-btn:hover{color:var(--red);background:rgba(231,76,60,.08)}
+
+/* FILTERS */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.filter-btn{padding:6px 14px;border-radius:16px;border:1.5px solid rgba(196,154,108,.3);background:var(--cream);color:var(--brown-mid);font-size:.8rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:.2s}
+.filter-btn.active,.filter-btn:hover{background:var(--brown);color:var(--white);border-color:var(--brown)}
+.search-box{padding:7px 14px;border-radius:16px;border:1.5px solid rgba(196,154,108,.3);background:var(--cream);color:var(--brown);font-size:.82rem;font-family:'Poppins',sans-serif;outline:none;margin-left:auto}
+.search-box:focus{border-color:var(--gold)}
+
+/* TESTIMONIALS */
+.testi-card{background:var(--cream);border-radius:14px;padding:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+.testi-card p{font-size:.86rem;color:var(--brown-mid);font-style:italic;margin-bottom:6px}
+.testi-card strong{font-size:.85rem;color:var(--brown)}
+.add-testi{background:var(--cream);border:2px dashed rgba(196,154,108,.4);border-radius:14px;padding:20px;margin-top:15px}
+.add-testi h4{font-size:.88rem;color:var(--brown);margin-bottom:15px;font-weight:600}
+
+.empty{text-align:center;padding:40px;color:var(--brown-light)}
+.empty i{font-size:2.5rem;display:block;margin-bottom:12px}
+.loading-spin{text-align:center;padding:30px;color:var(--brown-light)}
+.loading-spin i{animation:spin 1s linear infinite;font-size:1.5rem}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .sidebar{display:none}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Dr. <span>Mouna</span> Sabah</div>
+    <div class="login-sub">🔐 Espace Administration</div>
+    <input type="text" id="user-input" placeholder="Nom d'utilisateur" onkeydown="if(event.key==='Enter')login()" style="letter-spacing:normal;margin-bottom:12px"/>
+    <input type="password" id="pwd-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')login()"/>
+    <button class="login-btn" onclick="login()"><i class="fas fa-lock"></i> Connexion</button>
+    <div class="login-error" id="login-error">❌ Mot de passe incorrect</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen">
+  <div class="topbar">
+    <div class="topbar-logo">Dr. <span>Mouna</span> Sabah &nbsp;|&nbsp; <small style="font-family:'Poppins';font-size:.78rem;color:var(--brown-light)">Administration</small></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="save-all-btn" onclick="saveAllSettings()"><i class="fas fa-cloud-arrow-up"></i> Sauvegarder tout</button>
+      <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-item" onclick="showPage('settings',this)"><i class="fas fa-gear"></i> Paramètres</div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-item" onclick="showPage('reservations',this)"><i class="fas fa-calendar-check"></i> Réservations</div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-item" onclick="showPage('hero',this)"><i class="fas fa-house"></i> Hero Section</div>
+      <div class="sidebar-item" onclick="showPage('about',this)"><i class="fas fa-user-doctor"></i> À propos</div>
+      <div class="sidebar-item" onclick="showPage('services',this)"><i class="fas fa-tooth"></i> Services</div>
+      <div class="sidebar-item" onclick="showPage('contact',this)"><i class="fas fa-phone"></i> Contact</div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-item" onclick="showPage('testimonials',this)"><i class="fas fa-star"></i> Témoignages</div>
+      <div class="sidebar-item" onclick="showPage('design',this)"><i class="fas fa-palette"></i> Design & Couleurs</div>
+      <div class="sidebar-item" onclick="showPage('media',this)"><i class="fas fa-image"></i> Images & Logo</div>
+    </div>
+
+    <!-- PAGES -->
+    <div class="content">
+
+      <!-- SETTINGS -->
+      <div class="page" id="page-settings">
+        <div class="page-title"><i class="fas fa-gear" style="color:var(--gold)"></i> Paramètres</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-user-shield"></i> Identifiants de connexion</div>
+          <div class="form-group"><label>Nom d'utilisateur actuel</label><input type="text" id="current-user" disabled style="opacity:.6"/></div>
+          <div style="height:1px;background:rgba(196,154,108,.15);margin:18px 0"></div>
+          <div class="form-group"><label>Nouveau nom d'utilisateur</label><input type="text" id="new-username" placeholder="Nouveau username"/></div>
+          <div class="form-group"><label>Nouveau mot de passe</label><input type="password" id="new-password" placeholder="Nouveau mot de passe"/></div>
+          <div class="form-group"><label>Confirmer le mot de passe</label><input type="password" id="confirm-password" placeholder="Confirmer le mot de passe"/></div>
+          <button class="save-btn" onclick="saveCredentials()"><i class="fas fa-save"></i> Sauvegarder</button>
+          <span class="saved-msg" id="msg-settings">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+      <!-- RESERVATIONS -->
+      <div class="page" id="page-reservations">
+        <div class="page-title"><i class="fas fa-calendar-check" style="color:var(--gold)"></i> Réservations</div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="s-num" id="st-total">—</div><div class="s-label">Total</div></div>
+          <div class="stat-card"><div class="s-num" id="st-today">—</div><div class="s-label">Aujourd'hui</div></div>
+          <div class="stat-card"><div class="s-num" id="st-upcoming">—</div><div class="s-label">À venir</div></div>
+          <div class="stat-card"><div class="s-num" id="st-past">—</div><div class="s-label">Passés</div></div>
+        </div>
+        <div class="card">
+          <div class="filters">
+            <button class="filter-btn active" onclick="setFilter('all',this)">Tous</button>
+            <button class="filter-btn" onclick="setFilter('today',this)">Aujourd'hui</button>
+            <button class="filter-btn" onclick="setFilter('upcoming',this)">À venir</button>
+            <button class="filter-btn" onclick="setFilter('past',this)">Passés</button>
+            <input class="search-box" type="text" placeholder="🔍 Rechercher..." oninput="searchRes(this.value)"/>
+          </div>
+          <div id="res-table-body"><div class="loading-spin"><i class="fas fa-spinner"></i></div></div>
+        </div>
+      </div>
+
+      <!-- HERO -->
+      <div class="page" id="page-hero">
+        <div class="page-title"><i class="fas fa-house" style="color:var(--gold)"></i> Hero Section</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-heading"></i> Textes principaux</div>
+          <div class="form-group"><label>Badge</label><input type="text" id="hero_badge" placeholder="Clinique Dentaire Premium — Rabat Agdal"/></div>
+          <div class="form-group"><label>Titre principal</label><input type="text" id="hero_title" placeholder="Votre Sourire, Notre Passion"/></div>
+          <div class="form-group"><label>Sous-titre</label><textarea id="hero_subtitle"></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Stat — Expérience</label><input type="text" id="stat_experience" placeholder="10+"/></div>
+            <div class="form-group"><label>Stat — Patients</label><input type="text" id="stat_patients" placeholder="2K+"/></div>
+          </div>
+          <button class="save-btn" onclick="saveSection(['hero_badge','hero_title','hero_subtitle','stat_experience','stat_patients'],this)"><i class="fas fa-save"></i> Sauvegarder</button>
+          <span class="saved-msg" id="msg-hero">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="page" id="page-about">
+        <div class="page-title"><i class="fas fa-user-doctor" style="color:var(--gold)"></i> À propos</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-pen"></i> Texte de présentation</div>
+          <div class="form-group"><label>Paragraphe 1</label><textarea id="about_text1"></textarea></div>
+          <div class="form-group"><label>Paragraphe 2</label><textarea id="about_text2"></textarea></div>
+          <button class="save-btn" onclick="saveSection(['about_text1','about_text2'],this)"><i class="fas fa-save"></i> Sauvegarder</button>
+          <span class="saved-msg" id="msg-about">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="page" id="page-services">
+        <div class="page-title"><i class="fas fa-tooth" style="color:var(--gold)"></i> Services</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-star"></i> Blanchiment Dentaire</div>
+          <div class="form-group"><label>Titre</label><input type="text" id="service1_title" placeholder="Blanchiment Dentaire"/></div>
+          <div class="form-group"><label>Description</label><textarea id="service1_desc"></textarea></div>
+          <div class="form-group"><label>Badge</label><input type="text" id="service1_badge" placeholder="✦ Résultats dès la 1ère séance"/></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-tooth"></i> Orthodontie</div>
+          <div class="form-group"><label>Titre</label><input type="text" id="service2_title" placeholder="Orthodontie"/></div>
+          <div class="form-group"><label>Description</label><textarea id="service2_desc"></textarea></div>
+          <div class="form-group"><label>Badge</label><input type="text" id="service2_badge" placeholder="✦ Bagues & Aligneurs"/></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-shield-halved"></i> Implants Dentaires</div>
+          <div class="form-group"><label>Titre</label><input type="text" id="service3_title" placeholder="Implants Dentaires"/></div>
+          <div class="form-group"><label>Description</label><textarea id="service3_desc"></textarea></div>
+          <div class="form-group"><label>Badge</label><input type="text" id="service3_badge" placeholder="✦ Solution permanente"/></div>
+        </div>
+        <button class="save-btn" onclick="saveSection(['service1_title','service1_desc','service1_badge','service2_title','service2_desc','service2_badge','service3_title','service3_desc','service3_badge'],this)"><i class="fas fa-save"></i> Sauvegarder</button>
+        <span class="saved-msg" id="msg-services">✅ Sauvegardé!</span>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="page" id="page-contact">
+        <div class="page-title"><i class="fas fa-phone" style="color:var(--gold)"></i> Contact</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-address-book"></i> Coordonnées</div>
+          <div class="form-group"><label>Téléphone</label><input type="text" id="phone" placeholder="+212 631 314 015"/></div>
+          <div class="form-group"><label>Email</label><input type="text" id="email" placeholder="MounaSabah13@gmail.com"/></div>
+          <div class="form-group"><label>Adresse</label><input type="text" id="address" placeholder="Av Bno Sina, Rabat Agdal 15, Morocco"/></div>
+          <div class="form-group"><label>Texte Logo</label><input type="text" id="logo_text" placeholder="Dr. Mouna Sabah"/></div>
+          <button class="save-btn" onclick="saveSection(['phone','email','address','logo_text'],this)"><i class="fas fa-save"></i> Sauvegarder</button>
+          <span class="saved-msg" id="msg-contact">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="page" id="page-testimonials">
+        <div class="page-title"><i class="fas fa-star" style="color:var(--gold)"></i> Témoignages</div>
+        <div class="card">
+          <div id="testi-list"><div class="loading-spin"><i class="fas fa-spinner"></i></div></div>
+          <div class="add-testi">
+            <h4><i class="fas fa-plus" style="color:var(--gold)"></i> Ajouter un témoignage</h4>
+            <div class="form-group"><label>Nom</label><input type="text" id="new-testi-name" placeholder="Sara Benali"/></div>
+            <div class="form-group"><label>Ville</label><input type="text" id="new-testi-city" placeholder="Rabat, Maroc"/></div>
+            <div class="form-group"><label>Témoignage</label><textarea id="new-testi-text" placeholder="Votre avis..."></textarea></div>
+            <button class="save-btn" onclick="addTestimonial()"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESIGN -->
+      <div class="page" id="page-design">
+        <div class="page-title"><i class="fas fa-palette" style="color:var(--gold)"></i> Design & Couleurs</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-droplet"></i> Couleurs du site</div>
+          <div class="form-group">
+            <label>Couleur principale (Marron)</label>
+            <div class="color-row">
+              <input type="color" id="primary_color_picker" value="#4a2c1a" oninput="document.getElementById('primary_color').value=this.value"/>
+              <input type="text" id="primary_color" placeholder="#4a2c1a"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Couleur accent (Or)</label>
+            <div class="color-row">
+              <input type="color" id="gold_color_picker" value="#d4a853" oninput="document.getElementById('gold_color').value=this.value"/>
+              <input type="text" id="gold_color" placeholder="#d4a853"/>
+            </div>
+          </div>
+          <button class="save-btn" onclick="saveSection(['primary_color','gold_color'],this)"><i class="fas fa-save"></i> Sauvegarder</button>
+          <span class="saved-msg" id="msg-design">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+      <!-- MEDIA -->
+      <div class="page" id="page-media">
+        <div class="page-title"><i class="fas fa-image" style="color:var(--gold)"></i> Images & Logo</div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-image"></i> Image Hero (Arrière-plan)</div>
+          <div class="img-upload" onclick="document.getElementById('hero-img-input').click()">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <p>Cliquez pour uploader une image</p>
+            <img id="hero-img-preview" class="img-preview"/>
+          </div>
+          <input type="file" id="hero-img-input" accept="image/*" style="display:none" onchange="previewImg(this,'hero-img-preview','hero_image')"/>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-user-circle"></i> Photo du Docteur (Section À propos)</div>
+          <div class="img-upload" onclick="document.getElementById('doctor-img-input').click()">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <p>Cliquez pour uploader une photo</p>
+            <img id="doctor-img-preview" class="img-preview"/>
+          </div>
+          <input type="file" id="doctor-img-input" accept="image/*" style="display:none" onchange="previewImg(this,'doctor-img-preview','doctor_image')"/>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-star"></i> Favicon</div>
+          <div class="img-upload" onclick="document.getElementById('favicon-input').click()">
+            <i class="fas fa-star"></i>
+            <p>Uploader le favicon (.ico ou .png)</p>
+            <img id="favicon-preview" class="img-preview" style="max-height:64px"/>
+          </div>
+          <input type="file" id="favicon-input" accept="image/*" style="display:none" onchange="previewImg(this,'favicon-preview','favicon_image')"/>
+          <button class="save-btn" style="margin-top:15px" onclick="saveImages()"><i class="fas fa-save"></i> Sauvegarder les images</button>
+          <span class="saved-msg" id="msg-media">✅ Sauvegardé!</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_USER = "mouna";
+const ADMIN_PASSWORD = "mouna2025";
+const SB_URL = "https://zqulwlyjazdxmevlymnd.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxdWx3bHlqYXpkeG1ldmx5bW5kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4NjAwMDQsImV4cCI6MjA5MjQzNjAwNH0.S_kCKOC9bSyqAbWpf7KJQpy_TKNo85tnFXRqB6ljMo8";
+const HDR = {"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY};
+
+let allRes=[], curFilter='all', curSearch='', settings={}, pendingImages={};
+let testiData=[];
+let ADMIN_USER_LIVE=ADMIN_USER, ADMIN_PASS_LIVE=ADMIN_PASSWORD;
+
+// ── AUTH ──────────────────────────────────────────
+function login(){
+  const u=document.getElementById('user-input').value.trim();
+  const p=document.getElementById('pwd-input').value;
+  if(u===ADMIN_USER_LIVE && p===ADMIN_PASS_LIVE){
+
+// ── AUTH ──────────────────────────────────────────
+function login(){
+  const user=document.getElementById('user-input').value.trim();
+  const pwd=document.getElementById('pwd-input').value;
+  if(user===ADMIN_USER && pwd===ADMIN_PASSWORD){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-screen').style.display='block';
+    loadAll();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pwd-input').value='';
+  }
+}
+function logout(){
+  document.getElementById('admin-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+}
+
+// ── NAVIGATION ────────────────────────────────────
+function showPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  el.classList.add('active');
+  if(id==='testimonials') loadTestimonials();
+}
+
+// ── LOAD ALL ──────────────────────────────────────
+async function loadAll(){
+  await Promise.all([loadReservations(), loadSettings()]);
+}
+
+// ── SETTINGS ──────────────────────────────────────
+async function loadSettings(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/site_settings?select=*`,{headers:HDR});
+    const data=await r.json();
+    data.forEach(row=>{ settings[row.key]=row.value; });
+    fillForms();
+  }catch(e){console.log('Settings error:',e)}
+}
+
+function fillForms(){
+  const fields=['hero_badge','hero_title','hero_subtitle','stat_experience','stat_patients',
+    'about_text1','about_text2','phone','email','address','logo_text',
+    'primary_color','gold_color',
+    'service1_title','service1_desc','service1_badge',
+    'service2_title','service2_desc','service2_badge',
+    'service3_title','service3_desc','service3_badge'];
+  fields.forEach(f=>{
+    const el=document.getElementById(f);
+    if(el && settings[f]) el.value=settings[f];
+  });
+  if(settings['primary_color']) document.getElementById('primary_color_picker').value=settings['primary_color'];
+  if(settings['gold_color']) document.getElementById('gold_color_picker').value=settings['gold_color'];
+  if(settings['hero_image']){const p=document.getElementById('hero-img-preview');p.src=settings['hero_image'];p.style.display='block';}
+  if(settings['doctor_image']){const p=document.getElementById('doctor-img-preview');p.src=settings['doctor_image'];p.style.display='block';}
+  if(settings['favicon_image']){const p=document.getElementById('favicon-preview');p.src=settings['favicon_image'];p.style.display='block';}
+}
+
+async function saveSection(keys, btn){
+  const pairs = keys.map(k=>({key:k, value:document.getElementById(k)?.value||''}));
+  try{
+    for(const p of pairs){
+      await fetch(`${SB_URL}/rest/v1/site_settings?key=eq.${p.key}`,{
+        method:'PATCH', headers:{...HDR,'Prefer':'return=minimal'},
+        body:JSON.stringify({value:p.value})
+      });
+      // If not exists, insert
+    }
+    const msgId = btn.nextElementSibling;
+    if(msgId){msgId.style.opacity='1';setTimeout(()=>msgId.style.opacity='0',2500);}
+  }catch(e){alert('Erreur lors de la sauvegarde');}
+}
+
+async function saveAllSettings(){
+  const allKeys=['hero_badge','hero_title','hero_subtitle','stat_experience','stat_patients',
+    'about_text1','about_text2','phone','email','address','logo_text','primary_color','gold_color',
+    'service1_title','service1_desc','service1_badge','service2_title','service2_desc','service2_badge',
+    'service3_title','service3_desc','service3_badge'];
+  for(const k of allKeys){
+    const el=document.getElementById(k);
+    if(!el) continue;
+    await fetch(`${SB_URL}/rest/v1/site_settings?key=eq.${k}`,{
+      method:'PATCH',headers:{...HDR,'Prefer':'return=minimal'},
+      body:JSON.stringify({value:el.value})
+    });
+  }
+  alert('✅ Tous les paramètres ont été sauvegardés!');
+}
+
+// ── IMAGES ────────────────────────────────────────
+function previewImg(input, previewId, key){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const p=document.getElementById(previewId);
+    p.src=e.target.result; p.style.display='block';
+    pendingImages[key]=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveImages(){
+  for(const [k,v] of Object.entries(pendingImages)){
+    await fetch(`${SB_URL}/rest/v1/site_settings?key=eq.${k}`,{
+      method:'PATCH',headers:{...HDR,'Prefer':'return=minimal'},
+      body:JSON.stringify({value:v})
+    });
+  }
+  const msg=document.getElementById('msg-media');
+  msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2500);
+}
+
+// ── RESERVATIONS ──────────────────────────────────
+async function loadReservations(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/reservations?select=*&order=date.asc,time.asc`,{headers:HDR});
+    allRes=await r.json();
+    updateStats(); renderResTable();
+  }catch(e){document.getElementById('res-table-body').innerHTML='<div class="empty"><i class="fas fa-exclamation-triangle"></i>Erreur de connexion</div>';}
+}
+
+function todayStr(){const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;}
+
+function updateStats(){
+  const today=todayStr();
+  document.getElementById('st-total').textContent=allRes.length;
+  document.getElementById('st-today').textContent=allRes.filter(r=>r.date===today).length;
+  document.getElementById('st-upcoming').textContent=allRes.filter(r=>r.date>today).length;
+  document.getElementById('st-past').textContent=allRes.filter(r=>r.date<today).length;
+}
+
+function getBadge(date){
+  const today=todayStr();
+  if(date===today) return '<span class="badge badge-today">Aujourd\'hui</span>';
+  if(date>today) return '<span class="badge badge-upcoming">À venir</span>';
+  return '<span class="badge badge-past">Passé</span>';
+}
+
+function fmtDate(ds){
+  if(!ds) return '—';
+  const [y,m,d]=ds.split('-');
+  const mo=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+  return `${d} ${mo[parseInt(m)-1]} ${y}`;
+}
+
+function renderResTable(){
+  const today=todayStr();
+  let data=allRes.filter(r=>{
+    if(curFilter==='today') return r.date===today;
+    if(curFilter==='upcoming') return r.date>today;
+    if(curFilter==='past') return r.date<today;
+    return true;
+  });
+  if(curSearch) data=data.filter(r=>(r.name||'').toLowerCase().includes(curSearch.toLowerCase())||(r.phone||'').includes(curSearch));
+  if(!data.length){document.getElementById('res-table-body').innerHTML='<div class="empty"><i class="fas fa-calendar-xmark"></i>Aucune réservation</div>';return;}
+  let h=`<table class="res-table"><thead><tr><th>#</th><th>Nom</th><th>Téléphone</th><th>Date</th><th>Heure</th><th>Message</th><th>Statut</th><th></th></tr></thead><tbody>`;
+  data.forEach((r,i)=>{
+    h+=`<tr><td style="color:var(--brown-light);font-size:.78rem">${i+1}</td>
+    <td><strong>${r.name||'—'}</strong></td>
+    <td><a href="tel:${r.phone||''}" style="color:var(--brown);text-decoration:none">${r.phone||'—'}</a></td>
+    <td>${fmtDate(r.date)}</td>
+    <td><strong style="color:var(--gold)">${r.time||'—'}</strong></td>
+    <td style="color:var(--brown-light);font-size:.8rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.message||'—'}</td>
+    <td>${getBadge(r.date)}</td>
+    <td><button class="del-btn" onclick="deleteRes(${r.id})"><i class="fas fa-trash"></i></button></td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('res-table-body').innerHTML=h;
+}
+
+async function deleteRes(id){
+  if(!confirm('Supprimer ce rendez-vous?')) return;
+  await fetch(`${SB_URL}/rest/v1/reservations?id=eq.${id}`,{method:'DELETE',headers:HDR});
+  allRes=allRes.filter(r=>r.id!==id);
+  updateStats(); renderResTable();
+}
+
+function setFilter(f,btn){
+  curFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResTable();
+}
+function searchRes(v){curSearch=v;renderResTable();}
+
+// ── TESTIMONIALS ──────────────────────────────────
+async function loadTestimonials(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/testimonials?select=*&order=id.desc`,{headers:HDR});
+    testiData=await r.json();
+    renderTestimonials();
+  }catch(e){
+    // Table might not exist yet
+    document.getElementById('testi-list').innerHTML='<p style="color:var(--brown-light);font-size:.85rem;margin-bottom:15px">Créez la table "testimonials" dans Supabase pour activer cette fonctionnalité.</p>';
+  }
+}
+
+function renderTestimonials(){
+  if(!testiData.length){document.getElementById('testi-list').innerHTML='<div class="empty"><i class="fas fa-star"></i>Aucun témoignage</div>';return;}
+  let h='';
+  testiData.forEach(t=>{
+    h+=`<div class="testi-card">
+      <div><p>"${t.text}"</p><strong>${t.name}</strong> — <small style="color:var(--brown-light)">${t.city}</small></div>
+      <button class="del-btn" onclick="deleteTesti(${t.id})"><i class="fas fa-trash"></i></button>
+    </div>`;
+  });
+  document.getElementById('testi-list').innerHTML=h;
+}
+
+async function addTestimonial(){
+  const name=document.getElementById('new-testi-name').value.trim();
+  const city=document.getElementById('new-testi-city').value.trim();
+  const text=document.getElementById('new-testi-text').value.trim();
+  if(!name||!text){alert('Nom et témoignage obligatoires');return;}
+  await fetch(`${SB_URL}/rest/v1/testimonials`,{method:'POST',headers:{...HDR,'Prefer':'return=minimal'},body:JSON.stringify({name,city,text})});
+  document.getElementById('new-testi-name').value='';
+  document.getElementById('new-testi-city').value='';
+  document.getElementById('new-testi-text').value='';
+  loadTestimonials();
+}
+
+async function deleteTesti(id){
+  if(!confirm('Supprimer ce témoignage?')) return;
+  await fetch(`${SB_URL}/rest/v1/testimonials?id=eq.${id}`,{method:'DELETE',headers:HDR});
+  testiData=testiData.filter(t=>t.id!==id);
+  renderTestimonials();
+}
+</script>
+</body>
+</html>

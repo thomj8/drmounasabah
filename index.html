@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dr. Mouna Sabah - Dentiste</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --brown:#4a2c1a;
+  --brown-mid:#7a4a2e;
+  --brown-light:#c49a6c;
+  --gold:#d4a853;
+  --cream:#fdf6ee;
+  --white:#ffffff;
+  --gray:#f5f0ea;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--brown)}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:999;background:rgba(253,246,238,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(196,154,108,0.2);padding:15px 5%}
+.nav-inner{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--brown);font-weight:700}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--brown-mid);font-size:.88rem;font-weight:500;transition:.3s;letter-spacing:.5px}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--brown);color:var(--white)!important;padding:10px 22px;border-radius:30px!important;transition:all .3s!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--brown)!important}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:var(--brown);cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(135deg,var(--brown) 0%,var(--brown-mid) 50%,var(--brown-light) 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 5% 60px;justify-content:flex-start}
+.hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:rgba(212,168,83,.1);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-5%;width:400px;height:400px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none}
+.hero-content{max-width:55%;z-index:1;animation:fadeUp .9s ease}
+.hero-badge{display:inline-block;background:rgba(212,168,83,.2);border:1px solid var(--gold);color:var(--gold);padding:6px 18px;border-radius:20px;font-size:.8rem;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4.5vw,4.5rem);color:var(--white);line-height:1.15;margin-bottom:15px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:rgba(255,255,255,.8);font-size:1rem;line-height:1.8;margin-bottom:35px;max-width:480px}
+.hero-btns{display:flex;gap:15px;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--brown);padding:14px 32px;border-radius:40px;text-decoration:none;font-weight:600;font-size:.95rem;transition:.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.btn-secondary{border:2px solid rgba(255,255,255,.5);color:var(--white);padding:14px 32px;border-radius:40px;text-decoration:none;font-weight:500;font-size:.95rem;transition:.3s}
+.btn-secondary:hover{border-color:var(--white);background:rgba(255,255,255,.1)}
+.hero-stats{display:flex;gap:40px;margin-top:50px}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700}
+.stat-label{color:rgba(255,255,255,.7);font-size:.8rem}
+
+/* SECTIONS */
+section{padding:90px 5%}
+.section-tag{display:inline-block;color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--brown);margin-bottom:15px;line-height:1.3}
+.section-sub{color:var(--brown-mid);font-size:.95rem;line-height:1.8;max-width:550px}
+
+/* ABOUT */
+.about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.about-img{position:relative}
+.about-img-main{width:100%;border-radius:20px;height:480px;object-fit:cover;background:linear-gradient(135deg,var(--brown-light),var(--brown));display:flex;align-items:center;justify-content:center;color:var(--white);font-size:5rem}
+.about-badge{position:absolute;bottom:-20px;right:-20px;background:var(--gold);color:var(--brown);padding:20px 25px;border-radius:15px;text-align:center;box-shadow:0 10px 30px rgba(212,168,83,.4)}
+.about-badge strong{display:block;font-size:1.8rem;font-family:'Playfair Display',serif}
+.about-badge span{font-size:.75rem;font-weight:500}
+.about-content{padding-left:20px}
+.about-content p{color:var(--brown-mid);line-height:1.9;margin-bottom:20px;font-size:.95rem}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px}
+.feature-item{display:flex;align-items:center;gap:10px;color:var(--brown);font-size:.88rem;font-weight:500}
+.feature-item i{color:var(--gold);font-size:1rem}
+
+/* SERVICES */
+.services{background:var(--white)}
+.services-header{text-align:center;margin-bottom:60px}
+.services-header .section-sub{margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.service-card{background:var(--cream);border-radius:20px;padding:40px 30px;text-align:center;transition:.4s;border:1px solid transparent;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--brown-light));transform:scaleX(0);transition:.4s}
+.service-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 20px 50px rgba(74,44,26,.1)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{width:75px;height:75px;background:linear-gradient(135deg,var(--brown),var(--brown-mid));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 25px;font-size:1.8rem;color:var(--gold);transition:.4s}
+.service-card:hover .service-icon{background:linear-gradient(135deg,var(--gold),var(--brown-light));color:var(--white)}
+.service-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--brown);margin-bottom:12px}
+.service-card p{color:var(--brown-mid);font-size:.88rem;line-height:1.8}
+.service-price{margin-top:20px;padding-top:20px;border-top:1px solid rgba(196,154,108,.3)}
+.service-price span{color:var(--gold);font-weight:600;font-size:.9rem}
+
+/* WHY US */
+.why{background:linear-gradient(135deg,var(--brown) 0%,var(--brown-mid) 100%);color:var(--white)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.why-content .section-title{color:var(--white)}
+.why-content .section-sub{color:rgba(255,255,255,.8)}
+.why-list{margin-top:35px;display:flex;flex-direction:column;gap:20px}
+.why-item{display:flex;gap:18px;align-items:flex-start}
+.why-icon{width:50px;height:50px;min-width:50px;background:rgba(212,168,83,.2);border:1px solid rgba(212,168,83,.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gold)}
+.why-item h4{color:var(--white);font-size:1rem;font-weight:600;margin-bottom:5px}
+.why-item p{color:rgba(255,255,255,.7);font-size:.85rem;line-height:1.7}
+.why-img{border-radius:20px;overflow:hidden;height:450px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:6rem}
+
+/* RESERVATION */
+.reservation{background:var(--cream)}
+.res-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:70px;align-items:center}
+.res-info h3{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--brown);margin-bottom:15px}
+.res-info p{color:var(--brown-mid);line-height:1.8;font-size:.95rem;margin-bottom:30px}
+.contact-info{display:flex;flex-direction:column;gap:15px}
+.contact-item{display:flex;align-items:center;gap:15px}
+.contact-item i{width:42px;height:42px;background:var(--brown);color:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.contact-item span{color:var(--brown-mid);font-size:.9rem}
+.contact-item a{color:var(--brown);font-weight:600;font-size:.95rem;text-decoration:none}
+.contact-item a:hover{color:var(--gold)}
+.res-form{background:var(--white);border-radius:25px;padding:45px;box-shadow:0 20px 60px rgba(74,44,26,.1)}
+.res-form h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);margin-bottom:30px;text-align:center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
+.form-group{margin-bottom:15px}
+.form-group label{display:block;color:var(--brown);font-size:.82rem;font-weight:600;margin-bottom:7px;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 18px;border:1.5px solid rgba(196,154,108,.3);border-radius:12px;background:var(--cream);color:var(--brown);font-family:'Poppins',sans-serif;font-size:.9rem;transition:.3s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(212,168,83,.1)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select{cursor:pointer}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--brown),var(--brown-mid));color:var(--white);border:none;padding:16px;border-radius:40px;font-size:1rem;font-weight:600;cursor:pointer;transition:.3s;font-family:'Poppins',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px}
+.submit-btn:hover{background:linear-gradient(135deg,var(--gold),var(--brown-light));color:var(--brown);transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,168,83,.4)}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--white)}
+.test-header{text-align:center;margin-bottom:60px}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.test-card{background:var(--cream);border-radius:20px;padding:35px;transition:.3s;border:1px solid transparent}
+.test-card:hover{border-color:var(--gold);transform:translateY(-5px);box-shadow:0 15px 40px rgba(74,44,26,.08)}
+.stars{color:var(--gold);font-size:.9rem;margin-bottom:15px}
+.test-card p{color:var(--brown-mid);font-size:.9rem;line-height:1.8;font-style:italic;margin-bottom:20px}
+.test-author{display:flex;align-items:center;gap:12px}
+.author-avatar{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--brown),var(--gold));display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:1rem}
+.author-name{font-weight:600;color:var(--brown);font-size:.9rem}
+.author-loc{color:var(--brown-light);font-size:.8rem}
+
+/* CONTACT BAR */
+.contact-bar{background:var(--brown);padding:30px 5%}
+.contact-bar-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.contact-bar-item{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.85);font-size:.9rem}
+.contact-bar-item i{color:var(--gold);font-size:1.1rem}
+.contact-bar-item a{color:rgba(255,255,255,.85);text-decoration:none}
+.contact-bar-item a:hover{color:var(--gold)}
+
+/* WHATSAPP */
+.wa-float{position:fixed;bottom:30px;right:30px;z-index:1000;display:flex;align-items:center;gap:12px;background:#25D366;color:var(--white);padding:14px 22px;border-radius:50px;text-decoration:none;font-weight:600;font-size:.9rem;box-shadow:0 8px 25px rgba(37,211,102,.4);transition:.3s;animation:pulse 2s infinite}
+.wa-float:hover{background:#1da851;transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,.5)}
+.wa-float i{font-size:1.4rem}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,#2a1509,var(--brown));color:rgba(255,255,255,.8);text-align:center;padding:30px 5%}
+footer .logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+footer p{font-size:.85rem;color:rgba(255,255,255,.5)}
+footer .gold{color:var(--gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 8px 25px rgba(37,211,102,.4)}50%{box-shadow:0 8px 35px rgba(37,211,102,.7)}}
+
+/* STEPS */
+.steps-bar{display:flex;align-items:center;margin-bottom:28px}
+.step{display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:600;color:var(--brown-light)}
+.step span{width:26px;height:26px;border-radius:50%;background:var(--gray);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--brown-light);transition:.3s}
+.step.active span{background:var(--brown);color:var(--white)}
+.step.active{color:var(--brown)}
+.step.done span{background:var(--gold);color:var(--white)}
+.step-line{flex:1;height:2px;background:var(--gray);margin:0 8px}
+
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-header span{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--brown)}
+.cal-nav{background:var(--cream);border:1px solid rgba(196,154,108,.3);color:var(--brown);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:.2s}
+.cal-nav:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:6px}
+.cal-weekdays div{font-size:.72rem;font-weight:700;color:var(--brown-light);padding:4px 0;text-transform:uppercase}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:.85rem;font-weight:500;cursor:pointer;transition:.2s;border:1.5px solid transparent;position:relative}
+.cal-day.empty{cursor:default}
+.cal-day.past{color:#ccc;cursor:not-allowed}
+.cal-day.sunday{color:#e88}
+.cal-day.available{color:var(--brown);background:var(--cream)}
+.cal-day.available:hover{background:rgba(212,168,83,.2);border-color:var(--gold)}
+.cal-day.busy{background:#fdecea;color:#c0392b;cursor:not-allowed}
+.cal-day.busy::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#e74c3c}
+.cal-day.selected{background:var(--brown);color:var(--white);border-color:var(--brown);font-weight:700}
+.cal-day.today{border-color:var(--gold)}
+
+/* LEGEND */
+.cal-legend{display:flex;gap:18px;margin:12px 0;justify-content:center}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--brown-mid)}
+.leg-dot{width:12px;height:12px;border-radius:4px}
+.leg-dot.available{background:var(--cream);border:1.5px solid var(--brown-light)}
+.leg-dot.busy{background:#fdecea;border:1.5px solid #e74c3c}
+.leg-dot.selected{background:var(--brown)}
+
+/* TIME SLOTS */
+.time-label{font-size:.88rem;color:var(--brown);font-weight:600;margin-bottom:10px}
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:5px}
+.time-slot{padding:9px 4px;text-align:center;border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s;border:1.5px solid rgba(196,154,108,.3);background:var(--cream);color:var(--brown)}
+.time-slot:hover:not(.slot-busy){background:rgba(212,168,83,.2);border-color:var(--gold)}
+.time-slot.slot-selected{background:var(--brown);color:var(--white);border-color:var(--brown)}
+.time-slot.slot-busy{background:#fdecea;color:#c0392b;cursor:not-allowed;text-decoration:line-through;opacity:.7}
+
+/* SELECTED BANNER */
+.selected-slot-banner{background:linear-gradient(135deg,var(--brown),var(--brown-mid));color:var(--white);padding:14px 20px;border-radius:14px;display:flex;align-items:center;gap:12px;margin-bottom:22px;font-size:.92rem;font-weight:500}
+.selected-slot-banner i{color:var(--gold);font-size:1.2rem}
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .about-grid,.why-grid,.res-grid{grid-template-columns:1fr}
+  .services-grid,.test-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+  .about-badge{bottom:-10px;right:10px}
+  .about-content{padding-left:0}
+  .wa-float span{display:none}
+  .wa-float{padding:14px}
+  .contact-bar-inner{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Dr. <span>Mouna</span> Sabah</div>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Pourquoi nous</a></li>
+      <li><a href="#reservation">Réservation</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#reservation" class="nav-cta">Prendre RDV</a></li>
+    </ul>
+    <button class="menu-btn"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Clinique Dentaire Premium — Rabat Agdal</div>
+    <h1>Votre Sourire,<br/>Notre <span>Passion</span></h1>
+    <p>Dr. Mouna Sabah vous offre des soins dentaires d'excellence dans un cadre moderne et chaleureux. Votre confort et votre sourire sont notre priorité.</p>
+    <div class="hero-btns">
+      <a href="#reservation" class="btn-primary"><i class="fas fa-calendar-check"></i> Prendre Rendez-vous</a>
+      <a href="#services" class="btn-secondary">Nos Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Ans d'expérience</div></div>
+      <div class="stat"><div class="stat-num">2K+</div><div class="stat-label">Patients satisfaits</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Soins de qualité</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-img">
+      <div class="about-img-main">🦷</div>
+      <div class="about-badge">
+        <strong>10+</strong>
+        <span>Ans d'expérience</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <span class="section-tag">À propos</span>
+      <h2 class="section-title">Dr. Mouna Sabah<br/>Votre Dentiste de Confiance</h2>
+      <p>Diplômée en chirurgie dentaire, le Dr. Mouna Sabah exerce avec passion et dévouement depuis plus de 10 ans. Elle combine expertise médicale et approche humaine pour offrir à chaque patient des soins personnalisés et de haute qualité.</p>
+      <p>Son cabinet situé en plein cœur de Rabat Agdal est équipé des technologies dentaires les plus modernes pour garantir des traitements efficaces et confortables.</p>
+      <div class="about-features">
+        <div class="feature-item"><i class="fas fa-check-circle"></i> Technologies modernes</div>
+        <div class="feature-item"><i class="fas fa-check-circle"></i> Soins sans douleur</div>
+        <div class="feature-item"><i class="fas fa-check-circle"></i> Équipe professionnelle</div>
+        <div class="feature-item"><i class="fas fa-check-circle"></i> Suivi personnalisé</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <span class="section-tag">Nos Services</span>
+    <h2 class="section-title">Des Soins d'Excellence<br/>Pour Votre Sourire</h2>
+    <p class="section-sub">Nous proposons une gamme complète de traitements dentaires avec les meilleures technologies disponibles.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-star"></i></div>
+      <h3>Blanchiment Dentaire</h3>
+      <p>Retrouvez un sourire éclatant grâce à nos techniques de blanchiment professionnel, sûres et efficaces. Résultats visibles dès la première séance.</p>
+      <div class="service-price"><span>✦ Résultats dès la 1ère séance</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-tooth"></i></div>
+      <h3>Orthodontie</h3>
+      <p>Alignez vos dents et corrigez votre occlusion avec nos traitements orthodontiques personnalisés — bagues classiques ou aligneurs transparents.</p>
+      <div class="service-price"><span>✦ Bagues & Aligneurs Invisalign</span></div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-shield-halved"></i></div>
+      <h3>Implants Dentaires</h3>
+      <p>Retrouvez vos dents naturelles grâce à nos implants dentaires de haute qualité. Une solution durable, esthétique et fonctionnelle.</p>
+      <div class="service-price"><span>✦ Solution permanente & esthétique</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-grid">
+    <div class="why-content">
+      <span class="section-tag" style="color:var(--gold)">Pourquoi Nous Choisir</span>
+      <h2 class="section-title">Une Expérience Dentaire<br/>Hors du Commun</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.75)">Nous nous engageons à vous offrir les meilleurs soins dans un environnement confortable et rassurant.</p>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-microscope"></i></div>
+          <div><h4>Équipements de Pointe</h4><p>Notre cabinet est doté des dernières technologies pour des diagnostics précis et des traitements efficaces.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-heart-pulse"></i></div>
+          <div><h4>Approche Douce & Sans Douleur</h4><p>Nous utilisons des techniques modernes pour minimiser l'inconfort et vous garantir une expérience agréable.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-clock"></i></div>
+          <div><h4>Rendez-vous Flexibles</h4><p>Nous adaptons nos horaires à votre emploi du temps pour votre plus grande commodité.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-award"></i></div>
+          <div><h4>Expertise Reconnue</h4><p>Plus de 10 ans d'expérience et des centaines de patients satisfaits témoignent de notre savoir-faire.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="why-img">🏥</div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="reservation" id="reservation">
+  <div class="res-grid">
+    <div class="res-info">
+      <span class="section-tag">Réservation</span>
+      <h3>Prenez Rendez-vous<br/>en Ligne</h3>
+      <p>Réservez votre consultation en quelques clics. Notre équipe vous contactera pour confirmer votre rendez-vous dans les plus brefs délais.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div><span>Téléphone</span><br/><a href="tel:+212631314015">+212 631 314 015</a></div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div><span>Email</span><br/><a href="mailto:jtom8833@gmail.com">MounaSabah13@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-location-dot"></i>
+          <div><span>Adresse</span><br/><a href="https://maps.google.com/?q=Av+Bno+Sina+Rabat+Agdal" target="_blank">Av Bno Sina, Rabat Agdal 15, Morocco</a></div>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-whatsapp" style="color:#25D366"></i>
+          <div><span>WhatsApp</span><br/><a href="https://wa.me/212631314015" target="_blank">Envoyer un message</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="res-form">
+      <h3>📅 Réserver une Consultation</h3>
+
+      <!-- STEP INDICATOR -->
+      <div class="steps-bar">
+        <div class="step active" id="step-ind-1"><span>1</span> Date & Heure</div>
+        <div class="step-line"></div>
+        <div class="step" id="step-ind-2"><span>2</span> Vos Infos</div>
+        <div class="step-line"></div>
+        <div class="step" id="step-ind-3"><span>3</span> Confirmation</div>
+      </div>
+
+      <!-- STEP 1: CALENDAR -->
+      <div id="step1">
+        <!-- Calendar -->
+        <div class="cal-header">
+          <button class="cal-nav" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+          <span id="cal-title"></span>
+          <button class="cal-nav" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="cal-weekdays">
+          <div>Dim</div><div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+
+        <!-- Legend -->
+        <div class="cal-legend">
+          <div class="leg-item"><div class="leg-dot available"></div> Disponible</div>
+          <div class="leg-item"><div class="leg-dot busy"></div> Complet</div>
+          <div class="leg-item"><div class="leg-dot selected"></div> Sélectionné</div>
+        </div>
+
+        <!-- Time slots -->
+        <div id="time-section" style="display:none">
+          <div class="time-label">⏰ Choisissez une heure pour le <strong id="chosen-date-label"></strong></div>
+          <div class="time-grid" id="time-grid"></div>
+        </div>
+
+        <button class="submit-btn" onclick="goStep2()" id="btn-step2" style="margin-top:20px;display:none">
+          Continuer <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- STEP 2: FORM -->
+      <div id="step2" style="display:none">
+        <div class="selected-slot-banner">
+          <i class="fas fa-calendar-check"></i>
+          <span id="slot-banner-text"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>PRÉNOM *</label><input type="text" id="fname" placeholder="Votre prénom"/></div>
+          <div class="form-group"><label>NOM *</label><input type="text" id="lname" placeholder="Votre nom"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>TÉLÉPHONE *</label><input type="tel" id="phone" placeholder="+212 6XX XXX XXX"/></div>
+          <div class="form-group"><label>EMAIL</label><input type="email" id="email" placeholder="votre@email.com"/></div>
+        </div>
+        <div class="form-group">
+          <label>MESSAGE (OPTIONNEL)</label>
+          <textarea id="message" placeholder="Décrivez brièvement votre problème..."></textarea>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button class="submit-btn" onclick="goStep1()" style="background:var(--cream);color:var(--brown);flex:0 0 auto;width:auto;padding:16px 24px">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="submit-btn" onclick="submitForm()" style="flex:1">
+            <i class="fas fa-paper-plane"></i> Confirmer le RDV
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: SUCCESS -->
+      <div id="step3" style="display:none;text-align:center;padding:30px 0">
+        <div style="font-size:4rem;margin-bottom:20px">✅</div>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:12px">Rendez-vous Confirmé!</h3>
+        <p id="confirm-text" style="color:var(--brown-mid);line-height:1.8;margin-bottom:25px"></p>
+        <p style="color:var(--brown-mid);font-size:.88rem">Nous vous contacterons pour confirmer votre rendez-vous.</p>
+        <button onclick="resetAll()" style="margin-top:20px;background:none;border:none;color:var(--gold);cursor:pointer;font-family:'Poppins',sans-serif;font-size:.9rem">+ Nouveau rendez-vous</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="test-header">
+    <span class="section-tag">Témoignages</span>
+    <h2 class="section-title">Ce Que Disent Nos Patients</h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p>"Dr. Mouna Sabah est une professionnelle exceptionnelle. Mon blanchiment dentaire a donné des résultats incroyables dès la première séance. Je recommande vivement!"</p>
+      <div class="test-author"><div class="author-avatar">S</div><div><div class="author-name">Sara Benali</div><div class="author-loc">Rabat, Maroc</div></div></div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p>"Un cabinet moderne et une équipe très professionnelle. Mon traitement orthodontique se déroule parfaitement. La docteure est douce et très à l'écoute."</p>
+      <div class="test-author"><div class="author-avatar">K</div><div><div class="author-name">Karim Alaoui</div><div class="author-loc">Salé, Maroc</div></div></div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p>"J'avais très peur du dentiste mais Dr. Sabah a su me mettre en confiance. Mon implant est parfait et la douleur était minime. Merci infiniment!"</p>
+      <div class="test-author"><div class="author-avatar">L</div><div><div class="author-name">Leila Chraibi</div><div class="author-loc">Rabat, Maroc</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT BAR -->
+<div class="contact-bar" id="contact">
+  <div class="contact-bar-inner">
+    <div class="contact-bar-item"><i class="fas fa-location-dot"></i> Av Bno Sina, Rabat Agdal 15, Morocco</div>
+    <div class="contact-bar-item"><i class="fas fa-phone"></i> <a href="tel:+212631314015">+212 631 314 015</a></div>
+    <div class="contact-bar-item"><i class="fas fa-envelope"></i> <a href="mailto:MounaSabah13@gmail.com">MounaSabah13@gmail.com</a></div>
+    <div class="contact-bar-item"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/212631314015" target="_blank">WhatsApp</a></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Dr. <span class="gold">Mouna</span> Sabah</div>
+  <p style="margin-top:8px">Dentiste — Rabat Agdal, Maroc</p>
+  <p style="margin-top:10px;font-size:.78rem">© 2025 Dr. Mouna Sabah. Tous droits réservés.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/212631314015" class="wa-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+  <span>WhatsApp</span>
+</a>
+
+<script>
+const SB_URL = "https://zqulwlyjazdxmevlymnd.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxdWx3bHlqYXpkeG1ldmx5bW5kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4NjAwMDQsImV4cCI6MjA5MjQzNjAwNH0.S_kCKOC9bSyqAbWpf7KJQpy_TKNo85tnFXRqB6ljMo8";
+const SB_HEADERS = {"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY};
+
+async function loadBookedSlots(){
+  try{
+    const r = await fetch(`${SB_URL}/rest/v1/reservations?select=date,time`, {headers: SB_HEADERS});
+    const data = await r.json();
+    data.forEach(row => {
+      if(!bookedSlots[row.date]) bookedSlots[row.date] = [];
+      if(!bookedSlots[row.date].includes(row.time)) bookedSlots[row.date].push(row.time);
+    });
+    renderCalendar();
+  }catch(e){ console.log("Load error:",e); }
+}
+
+async function saveReservation(date, time, name, phone, message){
+  try{
+    await fetch(`${SB_URL}/rest/v1/reservations`, {
+      method:"POST",
+      headers: {...SB_HEADERS, "Prefer":"return=minimal"},
+      body: JSON.stringify({date, time, name, phone, message})
+    });
+  }catch(e){ console.log("Save error:",e); }
+}
+
+
+// ── BOOKING STATE ──────────────────────────────────────────────
+const ALL_SLOTS = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
+const CLOSED_DAYS = [0]; // Sunday closed
+
+// Simulated pre-booked slots (day-of-month → array of booked times)
+const bookedSlots = {};
+const today = new Date();
+function seedBookings(){
+  // seed some realistic busy slots for demo
+  const d1 = new Date(today); d1.setDate(today.getDate()+1);
+  const d2 = new Date(today); d2.setDate(today.getDate()+3);
+  const d3 = new Date(today); d3.setDate(today.getDate()+5);
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  bookedSlots[fmt(d1)] = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00']; // fully booked
+  bookedSlots[fmt(d2)] = ['09:00','10:00','11:00','14:00','15:00'];
+  bookedSlots[fmt(d3)] = ['09:30','10:30','14:30','15:30'];
+}
+seedBookings();
+
+let curYear = today.getFullYear();
+let curMonth = today.getMonth();
+let selDateStr = null;
+let selTime = null;
+
+function dateStr(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+function isFullyBooked(ds){ const b=bookedSlots[ds]||[]; return b.length>=ALL_SLOTS.length; }
+function isSunday(y,m,d){ return new Date(y,m,d).getDay()===0; }
+function isPast(y,m,d){ const t=new Date(); t.setHours(0,0,0,0); return new Date(y,m,d)<t; }
+
+function renderCalendar(){
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('cal-title').textContent = months[curMonth]+' '+curYear;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML='';
+  const first = new Date(curYear,curMonth,1).getDay();
+  const days = new Date(curYear,curMonth+1,0).getDate();
+  for(let i=0;i<first;i++) grid.innerHTML+='<div class="cal-day empty"></div>';
+  for(let d=1;d<=days;d++){
+    const ds = dateStr(curYear,curMonth,d);
+    const past = isPast(curYear,curMonth,d);
+    const sun = isSunday(curYear,curMonth,d);
+    const full = isFullyBooked(ds);
+    const isToday = ds===dateStr(today.getFullYear(),today.getMonth(),today.getDate());
+    let cls='cal-day';
+    if(past||sun) cls+=' past';
+    else if(full) cls+=' busy';
+    else cls+=' available';
+    if(isToday) cls+=' today';
+    if(ds===selDateStr) cls+=' selected';
+    const clickable=(!past&&!sun&&!full);
+    grid.innerHTML+=`<div class="${cls}" ${clickable?`onclick="selectDate('${ds}',${d})"`:''}>${d}</div>`;
+  }
+}
+
+function selectDate(ds, d){
+  selDateStr=ds; selTime=null;
+  renderCalendar();
+  // show time slots
+  const fmtLabel = `${d} ${['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][curMonth]} ${curYear}`;
+  document.getElementById('chosen-date-label').textContent=fmtLabel;
+  renderTimeSlots(ds);
+  document.getElementById('time-section').style.display='block';
+  document.getElementById('btn-step2').style.display='none';
+}
+
+function renderTimeSlots(ds){
+  const booked=bookedSlots[ds]||[];
+  const grid=document.getElementById('time-grid');
+  grid.innerHTML='';
+  ALL_SLOTS.forEach(t=>{
+    const busy=booked.includes(t);
+    const sel=t===selTime;
+    let cls='time-slot'+(busy?' slot-busy':sel?' slot-selected':'');
+    grid.innerHTML+=`<div class="${cls}" ${!busy?`onclick="selectTime('${t}')"`:''}>${t}</div>`;
+  });
+}
+
+function selectTime(t){
+  selTime=t;
+  renderTimeSlots(selDateStr);
+  document.getElementById('btn-step2').style.display='flex';
+}
+
+function changeMonth(dir){
+  curMonth+=dir;
+  if(curMonth>11){curMonth=0;curYear++;}
+  if(curMonth<0){curMonth=11;curYear--;}
+  renderCalendar();
+}
+
+function goStep2(){
+  if(!selDateStr||!selTime){alert('Veuillez choisir une date et une heure.');return;}
+  setStepActive(2);
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+  const [y,m,d]=selDateStr.split('-');
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('slot-banner-text').textContent=`📅 ${d} ${months[parseInt(m)-1]} ${y} à ${selTime}`;
+}
+
+function goStep1(){
+  setStepActive(1);
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step1').style.display='block';
+}
+
+function setStepActive(n){
+  for(let i=1;i<=3;i++){
+    const el=document.getElementById('step-ind-'+i);
+    el.classList.remove('active','done');
+    if(i<n) el.classList.add('done');
+    if(i===n) el.classList.add('active');
+  }
+}
+
+function submitForm(){
+  const fname=document.getElementById('fname').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  if(!fname||!phone){alert('Veuillez remplir tous les champs obligatoires (*).');return;}
+  // Mark slot as booked
+  if(!bookedSlots[selDateStr]) bookedSlots[selDateStr]=[];
+  bookedSlots[selDateStr].push(selTime);
+  // Show step 3
+  setStepActive(3);
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step3').style.display='block';
+  const [y,m,d]=selDateStr.split('-');
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const msg=document.getElementById('message').value.trim();
+
+  // Save to Supabase
+  saveReservation(selDateStr, selTime, fname+' '+document.getElementById('lname').value.trim(), phone, msg||'');
+
+
+
+  document.getElementById('confirm-text').innerHTML=`Bonjour <strong>${fname}</strong>, votre demande de rendez-vous le <strong>${d} ${months[parseInt(m)-1]} ${y} à ${selTime}</strong> a bien été reçue.`;
+  const waMsg=encodeURIComponent(`Bonjour Dr. Mouna Sabah, je souhaite réserver un RDV :\nNom: ${fname}\nDate: ${d}/${m}/${y} à ${selTime}\nTél: ${phone}${msg?'\nMessage: '+msg:''}`);
+  document.getElementById('wa-confirm-btn').href=`https://wa.me/212631314015?text=${waMsg}`;
+}
+
+function resetAll(){
+  selDateStr=null; selTime=null;
+  curYear=today.getFullYear(); curMonth=today.getMonth();
+  setStepActive(1);
+  document.getElementById('step3').style.display='none';
+  document.getElementById('step1').style.display='block';
+  document.getElementById('time-section').style.display='none';
+  document.getElementById('btn-step2').style.display='none';
+  renderCalendar();
+  ['fname','lname','phone','email','message'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('service').selectedIndex=0;
+}
+
+// ── INIT ────────────────────────────────────────────────────────
+loadBookedSlots();
+
+// Mobile nav
+document.querySelector('.menu-btn').addEventListener('click',()=>{
+  const links=document.querySelector('.nav-links');
+  if(links.style.display==='flex'){links.style.display='none'}
+  else{links.style.display='flex';links.style.flexDirection='column';links.style.position='absolute';links.style.top='65px';links.style.left='0';links.style.right='0';links.style.background='var(--cream)';links.style.padding='20px 5%';links.style.borderBottom='1px solid rgba(196,154,108,.3)'}
+});
+</script>
+</body>
+</html>
